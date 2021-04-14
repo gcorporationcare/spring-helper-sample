@@ -18,11 +18,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gcorp.common.Utils;
 import com.gcorp.constraint.InvalidWhen;
 import com.gcorp.constraint.ValidationStep;
 import com.gcorp.entity.enumeration.UserRole;
-import com.gcorp.exception.ValidationException;
 import com.gcorp.i18n.I18nMessage;
 
 import lombok.AllArgsConstructor;
@@ -44,6 +42,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "user")
+@InvalidWhen(value = { "role == null || \"ANONYMOUS\".equals(role.toString())" })
 public class User extends BaseEntity implements UserDetails {
 
 	protected static final String NAME_COLUMN = "name";
@@ -126,9 +125,6 @@ public class User extends BaseEntity implements UserDetails {
 
 	@Override
 	public void format() {
-		if (UserRole.ANONYMOUS.equals(role)) {
-			throw new ValidationException(I18nMessage.DataError.FORBIDDEN_VALUE_GIVEN, Utils.generateViolations(
-					InvalidWhen.class, I18nMessage.DataError.FORBIDDEN_VALUE_GIVEN, this, ROLE_COLUMN, role));
-		}
+		// Nothing here
 	}
 }

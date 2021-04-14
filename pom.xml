@@ -4,22 +4,22 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
+		<version>2.4.4</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.gcorporationcare</groupId>
 	<artifactId>spring-helper-sample</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-helper-sample</name>
-	<description>Sample application for demonstrate usage of Spring helper library</description>
+	<description>Sample application for demonstrate usage of Spring helper library (JDK 11)</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Use latest Spring Helper version -->
-		<spring-helper.version>1.0.4</spring-helper.version>
-		<lombok.version>1.18.16</lombok.version>
-		<jwt.version>0.9.0</jwt.version>
+		<spring-helper.version>2.0.0</spring-helper.version>
+		<lombok.version>1.18.18</lombok.version>
+		<jjwt.version>0.9.1</jjwt.version>
 	</properties>
 
 	<dependencies>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>${jwt.version}</version>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -70,8 +70,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>11</release>
 				</configuration>
 			</plugin>
 		</plugins>

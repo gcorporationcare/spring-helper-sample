@@ -34,7 +34,6 @@ import com.gcorp.convention.SqlNamingConvention;
 import com.gcorp.domain.FieldFilter;
 import com.gcorp.entity.enumeration.ProductType;
 import com.gcorp.entity.translation.ProductTranslation;
-import com.gcorp.exception.ValidationException;
 import com.gcorp.field.MoneyCurrency;
 import com.gcorp.field.converter.MoneyCurrencyConverter;
 import com.gcorp.i18n.I18nMessage;
@@ -74,6 +73,7 @@ import lombok.Setter;
  */
 @Configure(defaultSort = { @FieldSort("shop.name"), @FieldSort(Product.NAME_COLUMN),
 		@FieldSort(value = Product.PRICE_COLUMN, ascending = false) })
+@InvalidWhen(value = { "price <= 0" })
 public class Product extends BaseTranslatableEntity<ProductTranslation> {
 
 	protected static final String TYPE_COLUMN = "type";
@@ -157,11 +157,6 @@ public class Product extends BaseTranslatableEntity<ProductTranslation> {
 		}
 
 		name = Utils.getProperNoun(name);
-		if (price <= 0) {
-			// We can also use format method in order to trigger some manual validations
-			throw new ValidationException(I18nMessage.DataError.FORBIDDEN_VALUE_GIVEN, Utils.generateViolations(
-					InvalidWhen.class, I18nMessage.DataError.FORBIDDEN_VALUE_GIVEN, this, PRICE_COLUMN, price));
-		}
 		if (description == null) {
 			// Or use it in order to set default values
 			description = "N/A";
